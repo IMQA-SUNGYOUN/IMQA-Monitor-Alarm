@@ -44,7 +44,7 @@ export default () => {
           style={{marginRight: sizes.sm}}
           onPress={() =>
             navigation.navigate('Screens', {
-              screen: 'Pro',
+              screen: 'Notifications',
             })
           }>
           <Image source={icons.bell} radius={0} color={colors.icon} />

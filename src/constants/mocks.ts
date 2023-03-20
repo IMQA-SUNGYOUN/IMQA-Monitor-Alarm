@@ -174,6 +174,12 @@ export const CATEGORIES: ICategory[] = [
   {id: 4, name: 'Best deal'},
 ];
 
+export const NOTIFICATIONS_CATEGORIES: ICategory[] = [
+  {id: 1, name: 'Critical'},
+  {id: 2, name: 'Major'},
+  {id: 3, name: 'Minor'}
+]
+
 // article options
 export const ARTICLE_OPTIONS: IArticleOptions[] = [
   {

@@ -76,6 +76,10 @@ export interface IUseData {
   setTrending: (data?: IProduct[]) => void;
   categories: ICategory[];
   setCategories: (data?: ICategory[]) => void;
+
+  notifyCategories: ICategory[];
+  setNotifyCategories: (data?: ICategory[]) => void;
+  
   recommendations: IArticle[];
   setRecommendations: (data?: IArticle[]) => void;
   articles: IArticle[];

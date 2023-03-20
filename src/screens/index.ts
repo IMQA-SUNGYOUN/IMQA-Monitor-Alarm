@@ -5,7 +5,7 @@ export {default as Chat} from './Pro';
 export {default as Components} from './Components';
 export {default as Extras} from './Pro';
 export {default as Home} from './Home';
-export {default as Notifications} from './Pro';
+export {default as Notifications} from './Notifications';
 export {default as NotificationsSettings} from './Pro';
 export {default as Privacy} from './Pro';
 export {default as Profile} from './Profile';

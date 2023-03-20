@@ -16,6 +16,7 @@ import {
   TRENDING,
   CATEGORIES,
   ARTICLES,
+  NOTIFICATIONS_CATEGORIES,
 } from '../constants/mocks';
 import {light} from '../constants';
 
@@ -29,6 +30,10 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
   const [following, setFollowing] = useState<IProduct[]>(FOLLOWING);
   const [trending, setTrending] = useState<IProduct[]>(TRENDING);
   const [categories, setCategories] = useState<ICategory[]>(CATEGORIES);
+  
+  // 알림 카테고리 
+  const [notifyCategories, setNotifyCategories] = useState<ICategory[]>(NOTIFICATIONS_CATEGORIES);
+
   const [articles, setArticles] = useState<IArticle[]>(ARTICLES);
   const [article, setArticle] = useState<IArticle>({});
 
@@ -112,6 +117,8 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
     setTrending,
     categories,
     setCategories,
+    notifyCategories,
+    setNotifyCategories,
     articles,
     setArticles,
     article,
