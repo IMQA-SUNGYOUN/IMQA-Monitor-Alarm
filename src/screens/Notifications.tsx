@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList} from 'react-native';
-import { NativeModules } from 'react-native';
-import {useData, useTheme} from '../hooks';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
+import {FlatList, NativeModules} from 'react-native';
+import {useData, useTheme,} from '../hooks';
 import {IArticle, ICategory} from '../constants/types';
 import {Block, Button, Notification, Text} from '../components';
 import axios from 'axios';
+import { MpmAgent } from 'react-native-module-sample';
+
 
 const Notifications = () => {
   const data = useData();
@@ -12,25 +13,34 @@ const Notifications = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [notifyCategories, setNotifyCategories] = useState<ICategory[]>([]);
   const {colors, gradients, sizes} = useTheme();
-  const { ImqaWrappingClass } = NativeModules;
   const [number, setNumber] = useState("");
+  const Perf = NativeModules.PerformanceLogger;
+  const [mounted, setMounted] = useState(false);
 
-  // init Notifications
+  // const {MpmAgent} = NativeModules;
+
+  useLayoutEffect(() => {
+    console.log("Notifications");
+    
+    MpmAgent?.setBehaviorData("Notifications");
+  }, []);
+
   useEffect(() => {
-    ImqaWrappingClass.setScreenName('Notifications');
-    ImqaWrappingClass.startCreateRender();
-    // const start = performance.now();
+    MpmAgent?.startReactNativeRender("Notifications",true);
     setArticles(data?.articles);
     setNotifyCategories(data?.notifyCategories);
     setSelected(data?.notifyCategories[0]);
-    // const end = performance.now();
-    // console.log(`MyComponent render time: ${end - start} milliseconds`);
-    ImqaWrappingClass.endCreateRender();
+    MpmAgent?.endReactNativeRender("Notifications",true);
+  }, []);
+
+  // init Notifications
+  useEffect(() => {
+    
   }, [data.articles, data.notifyCategories]);
 
   // update Notifications on category change
   useEffect(() => {
-    ImqaWrappingClass.startRender();
+    // ImqaWrappingClass.startRender();
     const category = data?.notifyCategories?.find(
       (category) => category?.id === selected?.id,
     );
@@ -40,30 +50,73 @@ const Notifications = () => {
     );
 
     setArticles(newArticles);
-    return () => {
-      ImqaWrappingClass.endRender();
-    };
   }, [data, selected, setArticles]);
 
-  useEffect(() => {
-    ImqaWrappingClass.startResumeRender();
-    // ImqaWrappingClass.
-    return () => {
-      ImqaWrappingClass.endResumeRender();
-    };
-  });
-
   const onPressArt = () => {
-    console.log("test");
-    ImqaWrappingClass.startNetworkRender("collector.imqa.io", "/","GET", "https");
-    axios.get('https://collector.imqa.io')
-  .then(function (response) {
-    ImqaWrappingClass.endNetworkRender("200");
-    setNumber(response.data.msg)
-  })
-  .catch(function (error) {
-    ImqaWrappingClass.endNetworkRender("500");
-  });
+    requestAxios();
+    // ImqaWrappingClass.startNetworkRender("https://imqa.io/","/sample","GET","https");
+    // String componentName, String startTime, String hostName,String pathName, String method, String protocol
+  //   RNMpmAgentModule.startReactNativeNetwork( "Notifications", "https://imqa.io","/sample","GET","http");
+  //   axios.get('https://collector.imqa.io/222o2o2o')
+  // .then(function (response) {
+  //   // setTimeout(() => {  
+  //     RNMpmAgentModule.endReactNativeNetwork("Notifications","200");
+  //   setNumber(response.data.msg)
+  // })
+  // .catch(function (error) {
+  //   RNMpmAgentModule.endReactNativeNetwork("Notifications","500");
+  //   // console.log("eeerrorororo")
+  //   // ImqaWrappingClass.collectCrash("API 통신 실패");
+  //   // ImqaWrappingClass.endNetworkRender("500");
+  // });
+  }
+
+  function requestAxios(){
+    
+  //   let url = "http://121.0.136.27:3980/sample";
+  //   RNMpmAgentModule.startReactNativeNetwork( 
+  //           url,
+  //           "/sample",
+  //           "post",
+  //           url?.split('://')[0]);
+
+  // fetch("http://121.0.136.27:3980/")
+  // .then(response => {
+  //   // LOG  {"_bodyBlob": {"_data": {"__collector": [Object], "blobId": "4cc55615-81df-471f-9a4d-76f09f040454", "offset": 0, "size": 22}}, "_bodyInit": {"_data": {"__collector": [Object], "blobId": "4cc55615-81df-471f-9a4d-76f09f040454", "offset": 0, "size": 22}}, "bodyUsed": false, "headers": {"map": {"connection": "keep-alive", "content-length": "22", "content-type": "application/json; charset=utf-8", "date": "Sun, 07 May 2023 07:15:16 GMT", "etag": "W/\"16-Mu/KSH5sxGduHuyPUKlaa1fFwYE\"", "x-powered-by": "Express"}}, "ok": true, "status": 200, "statusText": "", "type": "default", "url": "http://121.0.136.27:3980/"} res
+  //   RNMpmAgentModule.endReactNativeNetwork(response.status.toString());  
+  //   return response;
+  // })
+  // .catch(error => {
+  //   RNMpmAgentModule.endReactNativeNetwork(response.status.toString());  
+  // });
+    const axiosInstance = axios.create({
+      baseURL:"http://121.0.136.27:3980/"
+    });
+
+    axiosInstance.interceptors.request.use(
+      (config) => {
+        try{
+          // MpmAgent.startReactNativeNetwork( 
+            // config.baseURL?.toString(),
+            // config.url?.toString(),
+            // config.method?.toString(),
+            // config.baseURL?.split('://')[0]);
+        }catch(e){
+          console.error(e);
+        }
+        return config;
+      },
+      error => {
+        // MpmAgent.endReactNativeNetwork("500");
+      }
+    );
+
+    axiosInstance.interceptors.response.use( response => {
+      // MpmAgent.endReactNativeNetwork(response.status.toString());
+      return response;
+    });
+
+    axiosInstance.get("/");
   }
 
   return (

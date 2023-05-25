@@ -1,10 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect} from 'react';
 import {Platform, Linking} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/core';
 
 import {Block, Button, Image, Text} from '../components/';
 import {useData, useTheme, useTranslation} from '../hooks/';
+import MpmAgent from 'react-native-module-sample';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -20,6 +21,15 @@ const Profile = () => {
   const IMAGE_MARGIN = (sizes.width - IMAGE_SIZE * 3 - sizes.padding * 2) / 2;
   const IMAGE_VERTICAL_MARGIN =
     (sizes.width - (IMAGE_VERTICAL_SIZE + sizes.sm) * 2) / 2;
+
+  useLayoutEffect(() => {
+    MpmAgent?.setBehaviorData("Profile");
+  }, []);
+
+  useEffect(() => {
+    MpmAgent?.startReactNativeRender("Profile",true);
+    MpmAgent?.endReactNativeRender("Profile",true);
+  }, []);
 
   const handleSocialLink = useCallback(
     (type: 'twitter' | 'dribbble') => {

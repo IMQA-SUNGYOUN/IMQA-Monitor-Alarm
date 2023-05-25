@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Articles, Components, Home, Profile, Register, Pro, Notifications} from '../screens';
+import {Articles, Components, Home, Profile, Register, Pro, Notifications, Settings} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
 
 const Stack = createStackNavigator();
@@ -34,6 +34,8 @@ export default () => {
 
       {/* 알람 화면 */}
       <Stack.Screen name="Notifications" component={Notifications} options={{title: t('navigation.notifications')}} />
+
+      <Stack.Screen name="Settings" component={Settings} options={screenOptions.settings} />
 
       <Stack.Screen
         name="Profile"

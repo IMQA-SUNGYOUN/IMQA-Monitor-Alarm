@@ -1,7 +1,7 @@
-import React, {useCallback, useState} from 'react';
-
+import React, {useCallback, useState, useEffect, useLayoutEffect} from 'react';
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
+import MpmAgent from 'react-native-module-sample';
 
 const Home = () => {
   const {t} = useTranslation();
@@ -9,6 +9,18 @@ const Home = () => {
   const {following, trending} = useData();
   const [products, setProducts] = useState(following);
   const {assets, colors, fonts, gradients, sizes} = useTheme();
+
+  useLayoutEffect(() => {
+    console.log("Home");
+
+    MpmAgent.setBehaviorData("Home");
+  }, []);
+
+  useEffect(() => {
+    MpmAgent.startReactNativeRender("Home",true);
+
+    MpmAgent.endReactNativeRender("Home", true);
+  }, []);
 
   const handleProducts = useCallback(
     (tab: number) => {

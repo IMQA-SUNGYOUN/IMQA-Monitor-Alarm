@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import {
   Image,
   TextInput,
@@ -13,6 +13,7 @@ import Text from './Text';
 
 import useTheme from '../hooks/useTheme';
 import {IInputProps} from '../constants/types';
+import MpmAgent from 'react-native-module-sample';
 
 const Input = ({
   id = 'Input',
@@ -114,6 +115,11 @@ const Input = ({
     },
   ]) as TextStyle;
 
+  useEffect(() => {
+    MpmAgent.startReactNativeRender("Input",false);
+
+    MpmAgent.endReactNativeRender("Input",false);
+  }, []);
   // generate component testID or accessibilityLabel based on Platform.OS
   const inputID =
     Platform.OS === 'android' ? {accessibilityLabel: id} : {testID: id};

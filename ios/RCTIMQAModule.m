@@ -1,8 +1,19 @@
-//
-//  RCTIMQAModule.m
-//  rnsoftuikitfree
-//
-//  Created by IMQA-SUNGYOUN on 2023/05/25.
-//
+// RCTCalendarModule.m
+#import "RCTIMQAModule.h"
 
-#import <Foundation/Foundation.h>
+@implementation RCTIMQAModule
+
+// To export a module named RCTCalendarModule
+RCT_EXPORT_MODULE(ImqaWrappingClass);
+
+RCT_EXPORT_METHOD(setAgentConfig:(NSString *)serverUrl projectKey:(NSString *)projectKey)
+{
+  NSLog(@"[IMQA] SET AGENT CONFIG : %@ %@", projectKey, serverUrl);
+  [NSUserDefaults.standardUserDefaults setObject:serverUrl forKey: @"serverUrl"];
+  [NSUserDefaults.standardUserDefaults setObject:projectKey forKey: @"projectKey"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  exit(0);
+}
+
+@end

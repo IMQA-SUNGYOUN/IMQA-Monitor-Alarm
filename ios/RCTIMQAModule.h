@@ -10,3 +10,7 @@
 
 
 #endif /* RCTIMQAModule_h */
+
+#import <React/RCTBridgeModule.h>
+@interface RCTIMQAModule : NSObject <RCTBridgeModule>
+@end

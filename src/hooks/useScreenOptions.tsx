@@ -102,6 +102,21 @@ export default () => {
         </Button>
       ),
     },
+      settings: {
+          ...menu,
+          headerTitle: () => (
+              <Text p white>
+                  {t('navigation.settings')}
+              </Text>
+          ),
+          headerRight: () => null,
+          headerLeft: () => (
+              <Button
+                  onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+                  <Image source={icons.menu} radius={0} color={colors.white} />
+              </Button>
+          ),
+      },
     pro: {
       ...menu,
       headerTransparent: true,

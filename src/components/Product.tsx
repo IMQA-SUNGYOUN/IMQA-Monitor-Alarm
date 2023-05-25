@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 
 import Block from './Block';
@@ -6,13 +6,22 @@ import Image from './Image';
 import Text from './Text';
 import {IProduct} from '../constants/types';
 import {useTheme, useTranslation} from '../hooks/';
+import MpmAgent from 'react-native-module-sample';
+
 
 const Product = ({image, title, type, linkLabel}: IProduct) => {
+
   const {t} = useTranslation();
   const {assets, colors, sizes} = useTheme();
-
+  
   const isHorizontal = type !== 'vertical';
   const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2;
+
+  useEffect(() => {
+    MpmAgent.startReactNativeRender("Product", false);
+
+    MpmAgent.endReactNativeRender("Product", false);
+  }, []);
 
   return (
     <Block

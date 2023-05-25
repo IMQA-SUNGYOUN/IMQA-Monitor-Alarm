@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   ViewStyle,
   Vibration,
@@ -12,6 +12,7 @@ import * as Haptics from 'expo-haptics';
 
 import useTheme from '../hooks/useTheme';
 import {IButtonProps} from '../constants/types';
+import MpmAgent from 'react-native-module-sample';
 
 const Button = ({
   id = 'Button',
@@ -208,6 +209,12 @@ const Button = ({
       ...(round && {maxWidth: buttonStyles.maxWidth}),
     },
   ]) as ViewStyle;
+
+  useEffect(() => {
+    MpmAgent.startReactNativeRender("Button",false);
+
+    MpmAgent.endReactNativeRender("Button",false);
+  }, []);
 
   // generate component testID or accessibilityLabel based on Platform.OS
   const buttonID =

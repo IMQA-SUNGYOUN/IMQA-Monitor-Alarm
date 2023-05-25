@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -13,6 +13,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import useTheme from '../hooks/useTheme';
 import {IBlockProps} from '../constants/types';
+import MpmAgent from 'react-native-module-sample';
 
 const Block = (props: IBlockProps) => {
   const {
@@ -220,6 +221,12 @@ const Block = (props: IBlockProps) => {
       </BlurView>
     );
   }
+
+  useEffect(() => {
+    MpmAgent?.startReactNativeRender("Block", false);
+
+    MpmAgent?.endReactNativeRender("Block", false);
+  }, []);
 
   return (
     <View {...blockID} {...rest} style={blockStyles}>

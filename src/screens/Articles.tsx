@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState,useLayoutEffect } from 'react';
 import {FlatList} from 'react-native';
 
 import {useData, useTheme} from '../hooks/';
 import {IArticle, ICategory} from '../constants/types';
 import {Block, Button, Article, Text} from '../components/';
+import MpmAgent from 'react-native-module-sample';
 
 const Articles = () => {
   const data = useData();
@@ -11,6 +12,15 @@ const Articles = () => {
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const {colors, gradients, sizes} = useTheme();
+
+  useLayoutEffect(() => {
+    MpmAgent?.setBehaviorData("Articles");
+  }, []);
+
+  useEffect(() => {
+    MpmAgent?.startReactNativeRender("Articles",true);
+    MpmAgent?.endReactNativeRender("Articles",true);
+  }, []);
 
   // init articles
   useEffect(() => {

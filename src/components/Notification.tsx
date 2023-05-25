@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import {TouchableWithoutFeedback} from 'react-native';
+import {TouchableWithoutFeedback, NativeModules} from 'react-native';
 
 import Text from './Text';
 import Block from './Block';
 import Image from './Image';
 import {useTheme, useTranslation} from '../hooks/';
 import {IArticle} from '../constants/types';
+import MpmAgent from 'react-native-module-sample';
 
 const Article = ({
   title,
@@ -21,6 +22,13 @@ const Article = ({
 }: IArticle) => {
   const {t} = useTranslation();
   const {colors, gradients, icons, sizes} = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const {MpmAgent} = NativeModules;
+  useEffect(() => {
+    MpmAgent?.startReactNativeRender("Notifications-child",false);
+
+    MpmAgent?.endReactNativeRender("Notifications-child",false);
+  }, []);
 
   // render card for Newest & Fashion
   if (category?.id !== 1) {

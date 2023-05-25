@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useLayoutEffect} from 'react';
 import {Linking, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import MpmAgent from 'react-native-module-sample';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -38,6 +39,15 @@ const Register = () => {
     agreed: false,
   });
   const {assets, colors, gradients, sizes} = useTheme();
+
+  useLayoutEffect(() => {
+    MpmAgent?.setBehaviorData("Register");
+  }, []);
+
+  useEffect(() => {
+    MpmAgent?.startReactNativeRender("Register",true);
+    MpmAgent?.endReactNativeRender("Register",true);
+  }, []);
 
   const handleChange = useCallback(
     (value) => {
